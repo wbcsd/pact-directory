@@ -102,6 +102,11 @@ const ConformanceTestResult: React.FC = () => {
   const [nonMandatoryPassingPercentage, setNonMandatoryPassingPercentage] =
     useState(0);
   const [techSpecVersion, setTechSpecVersion] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    companyName: "",
+    fullName: "",
+  });
   const [isNewTestRun, setIsNewTestRun] = useState(false);
 
   const navigate = useNavigate();
@@ -134,6 +139,7 @@ const ConformanceTestResult: React.FC = () => {
         setPassingPercentage(data.passingPercentage);
         setNonMandatoryPassingPercentage(data.nonMandatoryPassingPercentage);
         setTechSpecVersion(data.techSpecVersion);
+        setUserInfo({email: data.adminEmail, fullName: data.adminName, companyName: data.companyName});
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching test results:", error);
@@ -300,9 +306,9 @@ const ConformanceTestResult: React.FC = () => {
               </div>
               { profileData?.role === 'administrator' && (
               <div>
-                <div>{profileData?.companyName}</div>
-                <div>{profileData?.fullName}</div>
-                <div>{profileData?.email}</div>
+                <div>{userInfo?.companyName}</div>
+                <div>{userInfo?.fullName}</div>
+                <div>{userInfo?.email}</div>
               </div>
               )}
               { profileData?.role !== 'administrator' && (
